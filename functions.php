@@ -39,5 +39,38 @@
 		$response = curl_exec( $ch );
 	}
 
-	
+	/**
+	 * Format The Store Data
+	 *
+	 * @param void
+	 *
+	 * @return Array $sortedItems
+	 */
+	function StoreSortedData( $date ) {
+		// Get the items
+		$items = getStoreDataFromAPI($date);
+
+		// Create an array with 3 sections: Weekly, Daily, and Special
+		$sortedArray = array{
+			'BRWeeklyStorefront' => array(
+				'info' => array(
+					'title' => 'FEATURED ITEMS'
+				),
+				'items' => array()
+			),
+			'BRDailyStorefront' => array(
+				'info' => array(
+					'title' => 'DAILY ITEMS'
+				),
+				'items' => array()
+			),
+			'BRSpecialFeatured' => array(
+				'info' => array(
+					'title' => 'SPECIAL ITEMS'
+				),
+				'items' => array()
+			)
+		};
+
+		
 ?>
