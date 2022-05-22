@@ -72,5 +72,19 @@
 			)
 		};
 
+		foreach ( $items as $item ) { // Place the Items in their correct section (Weekly, Daily, or Special)
+			// Create links to the fortnitetracker website with the necessary details
+			$itemUrlName = strtolower( $item['name'] );
+			$itemUrlName = str_replace( ' ', '-', $itemUrlName );
+			$item['link_to_fn_item'] = 'https://fortnitetracker.com/locker/' . $item['manifestId'] . '/' . $itemUrlName;
+
+			// add item to sorted items
+			$sortedItems[$item['storeCategory']]['items'][] = $item;
+		}
+
+		// return our sorted items array
+		return $sortedItems;
+	}
+
 		
 ?>
