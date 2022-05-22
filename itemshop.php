@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<title>Test</title>
+		<title>Item Shop || Fortnite Haven</title>
 	</head>
 	<body>
 		<h1>Item Shop resets at 8 PM EST</h1>
