@@ -2,9 +2,6 @@
 	// get our functions so we can use them!
 	require_once( 'functions.php' );
 
-	// validate and get date
-	$date = getStoreDate();
-
 	// get the items sorted
 	$storeData = getStoreSortedData( $date );
 ?>
