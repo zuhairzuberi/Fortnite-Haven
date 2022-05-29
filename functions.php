@@ -1,6 +1,6 @@
 <?php
 	// Get our API Key
-	require_once( 'config.php');
+	require_once( 'API_Key.php');
 
 	// Set it to EST (Specifically Toronto cause im from there lol)
 	date_default_timezone_set( 'America/Toronto' );
