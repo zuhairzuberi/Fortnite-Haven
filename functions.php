@@ -40,6 +40,16 @@
 	}
 
 	/**
+	 * Get data from either the json file or hit the api for data.
+	 *
+	 * @param void
+	 *
+	 * @return void
+	 */
+	function getStoreDataFromJSON( $date ) {
+	}
+
+	/**
 	 * Format The Store Data
 	 *
 	 * @param void
