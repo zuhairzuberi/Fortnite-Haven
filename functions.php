@@ -49,7 +49,7 @@
 	function getStoreDataFromJSON( $date ) {
 		// make sure we have a json file with store data
 		if ( !file_exists( 'store_json_files/' . $date . '.json' ) ) { // if no json file found for the current date hit the api
-			
+			getStoreDataFromAPI( $date );
 		}
 
 	}
