@@ -52,6 +52,8 @@
 			getStoreDataFromAPI( $date );
 		}
 
+		// return store data as a php array
+		return json_decode( file_get_contents( 'store_json_files/' . $date . '.json' ), true );
 	}
 
 	/**
