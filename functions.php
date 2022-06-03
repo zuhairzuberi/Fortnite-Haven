@@ -37,6 +37,11 @@
 
 		// Response from the Endpoint
 		$response = curl_exec( $ch );
+		
+		// Create a File with the current date that will store our Array with all the items
+		$storeFile = fopen( 'json_files/' . $date . '.json', 'w' );
+		fwrite( $storeFile, $response );
+		fclose( $storeFile )
 	}
 
 	/**
@@ -47,13 +52,13 @@
 	 * @return void
 	 */
 	function getStoreDataFromJSON( $date ) {
-		// make sure we have a json file with store data
-		if ( !file_exists( 'store_json_files/' . $date . '.json' ) ) { // if no json file found for the current date hit the api
+		// Check to see if we have a JSON file that matches the date we need the store from
+		if ( !file_exists( 'json_files/' . $date . '.json' ) ) { // If we cannot find a JSON file with the current date, call on the API
 			getStoreDataFromAPI( $date );
 		}
 
-		// return store data as a php array
-		return json_decode( file_get_contents( 'store_json_files/' . $date . '.json' ), true );
+		// Return the Store Array using the JSON file from our folder
+		return json_decode( file_get_contents( 'json_files/' . $date . '.json' ), true );
 	}
 
 	/**
