@@ -44,4 +44,69 @@
 		fclose( $storeFile );
 	}
 
+	/**
+	 * Get data from either the json file or hit the api for data.
+	 *
+	 * @param void
+	 *
+	 * @return void
+	 */
+	function getStoreDataFromJSON( $date ) {
+		// Check if we have Store Data saved in a JSON File
+		if ( !file_exists( 'json_files/' . $date . '.json' ) ) { // if no json file found for the current date hit the api
+			getStoreDataFromAPI( $date );
+		}
+
+		// Return the Store Data in the files Folder
+		return json_decode( file_get_contents( 'json_files/' . $date . '.json' ), true );
+	}
+
+	/**
+	 * Format The Store Data
+	 *
+	 * @param void
+	 *
+	 * @return Array $sortedItems
+	 */
+	function StoreSortedData( $date ) {
+		// Get the items
+		$items = getStoreDataFromJSON($date);
+
+		// Create an array with 3 sections: Weekly, Daily, and Special
+		$sortedItems = array(
+			'BRWeeklyStorefront' => array(
+				'info' => array(
+					'title' => 'FEATURED ITEMS'
+				),
+				'items' => array()
+			),
+			'BRDailyStorefront' => array(
+				'info' => array(
+					'title' => 'DAILY ITEMS'
+				),
+				'items' => array()
+			),
+			'BRSpecialFeatured' => array(
+				'info' => array(
+					'title' => 'SPECIAL ITEMS'
+				),
+				'items' => array()
+			)
+		);
+
+		foreach ( $items as $item ) { // Place the Items in their correct section (Weekly, Daily, or Special)
+			// Create links to the fortnitetracker website with the necessary details
+			$itemUrlName = strtolower( $item['name'] );
+			$itemUrlName = str_replace( ' ', '-', $itemUrlName );
+			$item['link_to_fn_item'] = 'https://fortnitetracker.com/locker/' . $item['manifestId'] . '/' . $itemUrlName;
+
+			// Add item to sorted items
+			$sortedItems[$item['storeCategory']]['items'][] = $item;
+		}
+
+		// Return our sorted items array
+		return $sortedItems;
+	}
+
+
 ?>
