@@ -108,5 +108,48 @@
 		return $sortedItems;
 	}
 
+	/**
+	 * Get files in the json_files folder
+	 *
+	 * @param void
+	 *
+	 * @return Array $storeJsonFiles
+	 */
+	function getStoreJsonFiles() {
+		// Get all the files from our JSON directory
+		$allFiles = scandir( 'json_files' );
 
+		// Sort by Date in Descending Order
+		rsort( $allFiles );
+
+		// Create our array of the dates
+		$validFiles = array();
+
+		foreach ( $allFiles as $file ) { // Loop over the files in the directory
+			$namePieces = explode( '.', $file );
+		}
+
+		// Return the Valid Files
+		return $validFiles;
+	}
+
+	/**
+	 * Get store date and validate GET var
+	 *
+	 * @param void
+	 *
+	 * @return String $date
+	 */
+	function getStoreDate() {
+		// Get Today and Tomorrows Date incase the store has already refreshed
+		$date = date( 'Y-m-d' );
+		$tomorrowsDate = date( 'Y-m-d', strtotime(' +1 day') );
+
+		if ( date( 'G' ) >= 20 ) { // If it is past 8 PM EST then a new shop is ready and we need to create a new file
+			$date = $tomorrowsDate;
+		}
+
+		// Return a valid date
+		return $date;
+	}	
 ?>
