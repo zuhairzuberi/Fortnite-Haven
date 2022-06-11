@@ -2,8 +2,11 @@
 	// get our functions so we can use them!
 	require_once( 'functions.php' );
 
+	// validate and get the current date of the store
+	$date = getStoreDate();
+
 	// get the items sorted
-	$storeData = getStoreSortedData( $date );
+	$storeData = StoreSortedData( $date );
 ?>
 <!DOCTYPE html>
 <html>
