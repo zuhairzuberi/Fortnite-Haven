@@ -2,11 +2,11 @@
 	// Get our API Key
 	require_once( 'API_Key.php');
 
-	// Set it to EST (Specifically Toronto cause im from there lol)
-	date_default_timezone_set( 'America/Toronto' );
-
 	// Create a variable for date that will be used as the parameter for most of our store functions
 	$date = date( 'Y-m-d' );
+
+	// Set it to EST (Specifically Toronto cause im from there lol)
+	date_default_timezone_set( 'America/Toronto' );
 
 	/**
 	 * Get Store Data from Fortnite Tracker API
@@ -37,76 +37,11 @@
 
 		// Response from the Endpoint
 		$response = curl_exec( $ch );
-		
-		// Create a File with the current date that will store our Array with all the items
+
+		// Create a file titled 'YYYY-MM-DD' and save the JSON response to the file before closing
 		$storeFile = fopen( 'json_files/' . $date . '.json', 'w' );
 		fwrite( $storeFile, $response );
-		fclose( $storeFile )
+		fclose( $storeFile );
 	}
 
-	/**
-	 * Get data from either the json file or hit the api for data.
-	 *
-	 * @param void
-	 *
-	 * @return void
-	 */
-	function getStoreDataFromJSON( $date ) {
-		// Check to see if we have a JSON file that matches the date we need the store from
-		if ( !file_exists( 'json_files/' . $date . '.json' ) ) { // If we cannot find a JSON file with the current date, call on the API
-			getStoreDataFromAPI( $date );
-		}
-
-		// Return the Store Array using the JSON file from our folder
-		return json_decode( file_get_contents( 'json_files/' . $date . '.json' ), true );
-	}
-
-	/**
-	 * Format The Store Data
-	 *
-	 * @param void
-	 *
-	 * @return Array $sortedItems
-	 */
-	function StoreSortedData( $date ) {
-		// Get the items
-		$items = getStoreDataFromAPI($date);
-
-		// Create an array with 3 sections: Weekly, Daily, and Special
-		$sortedArray = array{
-			'BRWeeklyStorefront' => array(
-				'info' => array(
-					'title' => 'FEATURED ITEMS'
-				),
-				'items' => array()
-			),
-			'BRDailyStorefront' => array(
-				'info' => array(
-					'title' => 'DAILY ITEMS'
-				),
-				'items' => array()
-			),
-			'BRSpecialFeatured' => array(
-				'info' => array(
-					'title' => 'SPECIAL ITEMS'
-				),
-				'items' => array()
-			)
-		};
-
-		foreach ( $items as $item ) { // Place the Items in their correct section (Weekly, Daily, or Special)
-			// Create links to the fortnitetracker website with the necessary details
-			$itemUrlName = strtolower( $item['name'] );
-			$itemUrlName = str_replace( ' ', '-', $itemUrlName );
-			$item['link_to_fn_item'] = 'https://fortnitetracker.com/locker/' . $item['manifestId'] . '/' . $itemUrlName;
-
-			// add item to sorted items
-			$sortedItems[$item['storeCategory']]['items'][] = $item;
-		}
-
-		// return our sorted items array
-		return $sortedItems;
-	}
-
-		
 ?>
