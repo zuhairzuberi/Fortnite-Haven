@@ -41,4 +41,39 @@
 			}
 		</style>
 	</head>
+	<body style="font-family:'Fortnite';background: #1e1e1e;color:#fff;padding:10px;">
+		<div style="margin-bottom:20px;font-size:48px">
+			<div>FORTNITE ITEM SHOP</div>
+			<div style="font-size:28px;">Items Refresh on <?php echo date( 'M, jS', strtotime( $date ) ); ?> at 8pm EST</div>
+		</div>
+		<?php foreach ( $storeData as $section ) : ?>
+			<div style="width:100%;color:#000;background:#f1ed62;font-size:26px;display:inline-block">
+				<div style="padding:5px">
+					<div style="float:left"><?php echo $section['info']['title']; ?></div>
+				</div>
+			</div>
+			<div style="margin-bottom: 20px">
+				<ul style="list-style: none;margin: 0;text-align:center">
+					<?php foreach ( $section['items'] as $item ) : ?>
+						<li class="rarity-<?php echo strtolower( $item['rarity'] ); ?>" style="border:3px solid #ffffff;display:inline-block;max-width:200px;margin-top:20px;margin-right:20px">
+							<a target="_blank" href="<?php echo $item['link_to_fn_item']; ?>">
+								<div style="position:relative">
+									<div style="position:absolute;background: rgba(0,0,0,0.5);bottom:0;width:100%">
+										<div style="padding:5px">
+											<div style="float:left;font-size:20px;width:100%">
+												<div><?php echo $item['name']; ?></div>
+												<div style="font-size:16px"><?php echo number_format( $item['vBucks'] ); ?> v-bucks</div>
+											</div>
+										</div>
+									</div>
+									<img style="width:100%;display:block" src="<?php echo $item['imageUrl']; ?>" />
+								</div>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		<?php endforeach; ?>
+		<div style="border-bottom: 3px solid #ffffff"></div>		
+	</body>
 </html>
